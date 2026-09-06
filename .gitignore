@@ -1,0 +1,11 @@
+# Local runtime data
+config.json
+state.json
+environment-backup.json
+logs/
+
+# PowerShell and editor artifacts
+*.tmp
+*.bak
+.vs/
+.vscode/

@@ -18,9 +18,10 @@ function Restore-UserEnvironment {
     }
 }
 
-$runValue = (Get-ItemProperty -Path $RunKey -Name $RunValueName -ErrorAction SilentlyContinue).$RunValueName
-if ($runValue -and $runValue -like "*$InstallDir\\CodexProxyGuard.ps1*") {
-    if ($PSCmdlet.ShouldProcess("$RunKey\\$RunValueName", 'Remove Codex Proxy Guard startup entry')) {
+$runProperties = Get-ItemProperty -Path $RunKey -Name $RunValueName -ErrorAction SilentlyContinue
+$runValue = if ($runProperties -and $runProperties.PSObject.Properties[$RunValueName]) { [string]$runProperties.$RunValueName } else { '' }
+if ($runValue -and $runValue -like "*$InstallDir\CodexProxyGuard.ps1*") {
+    if ($PSCmdlet.ShouldProcess("$RunKey\$RunValueName", 'Remove Codex Proxy Guard startup entry')) {
         Remove-ItemProperty -Path $RunKey -Name $RunValueName -Force
     }
 }
@@ -28,7 +29,7 @@ if ($runValue -and $runValue -like "*$InstallDir\\CodexProxyGuard.ps1*") {
 if ($PSCmdlet.ShouldProcess('user proxy environment variables', 'Restore values saved by Codex Proxy Guard')) { Restore-UserEnvironment }
 
 $guard = Get-CimInstance Win32_Process -Filter "Name='powershell.exe' OR Name='pwsh.exe'" -ErrorAction SilentlyContinue | Where-Object {
-    $_.CommandLine -like "*$InstallDir\\CodexProxyGuard.ps1*"
+    $_.CommandLine -like "*$InstallDir\CodexProxyGuard.ps1*"
 }
 foreach ($process in @($guard)) {
     if ($PSCmdlet.ShouldProcess("PID $($process.ProcessId)", 'Stop Codex Proxy Guard')) { Stop-Process -Id $process.ProcessId -Force -ErrorAction SilentlyContinue }

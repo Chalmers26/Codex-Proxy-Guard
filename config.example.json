@@ -1,0 +1,18 @@
+{
+  "CheckIntervalSeconds": 8,
+  "StableChecksRequired": 2,
+  "ProxyDownChecksBeforeRecovery": 3,
+  "ProxyProgramRestartDebounceSeconds": 180,
+  "ProxyProgramPath": "",
+  "RestartDebounceSeconds": 45,
+  "CodexStartupDelaySeconds": 3,
+  "ProxyUriTemplate": "http://{0}:{1}",
+  "NoProxy": "localhost,127.0.0.1,::1",
+  "PreferredProxyPrograms": ["v2rayN", "xray", "mihomo", "clash", "sing-box", "Shadowsocks", "nekoray", "hiddify"],
+  "PreferredPorts": [10808, 10809, 7890, 7891, 7897, 20170, 2080, 2081, 1080],
+  "ProxyConfigPaths": [],
+  "CodexProcessPathPatterns": ["\\OpenAI\\Codex\\", "\\WindowsApps\\OpenAI.Codex_"],
+  "CodexExecutableGlobs": ["%LOCALAPPDATA%\\OpenAI\\Codex\\bin\\*\\codex.exe"],
+  "LogMaxMB": 5,
+  "LogKeepFiles": 4
+}
